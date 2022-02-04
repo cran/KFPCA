@@ -33,10 +33,10 @@ eigfun[[1]] <- function(x){cos(pi * x/10)/sqrt(5)}
 eigfun[[2]] <- function(x){sin(pi * x/10)/sqrt(5)}
 score <- cbind(rnorm(n, 0, sqrt(lambda_1)), rnorm(n, 0, sqrt(lambda_2)))
 # DataNew1 and DataNew2 have different sparsity
-DataNew1 <- GenDataKL(n, interval = interval, sparse = 6:8,
+DataNew1 <- GenDataKL(n, interval = interval, sparse = 6:8, regular = FALSE,
                       meanfun = function(x){0}, score = score,
                       eigfun = eigfun, sd = sqrt(0.1))
-DataNew2 <- GenDataKL(n, interval = interval, sparse = 2:4,
+DataNew2 <- GenDataKL(n, interval = interval, sparse = 2:4, regular = FALSE,
                       meanfun = function(x){0}, score = score,
                       eigfun = eigfun, sd = sqrt(0.1))
 # Create sparse plots

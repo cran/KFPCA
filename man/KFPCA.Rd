@@ -2,7 +2,7 @@
 % Please edit documentation in R/KFPCA.R
 \name{KFPCA}
 \alias{KFPCA}
-\title{Kendall Functional Principal Component Analysis}
+\title{Kendall Functional Principal Component Analysis (KFPCA) for sparse design}
 \usage{
 KFPCA(
   Lt,
@@ -70,7 +70,7 @@ A \code{list} containing the following components:
 \item{CompTime}{A scalar denoting the computation time.}
 }
 \description{
-FPCA for non-Gaussian functional/longitudinal data.
+KFPCA for non-Gaussian functional data with sparse design or longitudinal data.
 }
 \examples{
 # Generate data
@@ -82,7 +82,7 @@ eigfun <- list()
 eigfun[[1]] <- function(x){cos(pi * x/10)/sqrt(5)}
 eigfun[[2]] <- function(x){sin(pi * x/10)/sqrt(5)}
 score <- cbind(rnorm(n, 0, sqrt(lambda_1)), rnorm(n, 0, sqrt(lambda_2)))
-DataNew <- GenDataKL(n, interval = interval, sparse = 6:8,
+DataNew <- GenDataKL(n, interval = interval, sparse = 6:8, regular = FALSE,
                      meanfun = function(x){0}, score = score,
                      eigfun = eigfun, sd = sqrt(0.1))
 basis <- fda::create.bspline.basis(interval, nbasis = 13, norder = 4,
@@ -93,5 +93,5 @@ Klist <- KFPCA(DataNew$Lt, DataNew$Ly, interval, nK = 2, bw = 1,
 plot(Klist$FPC_smooth)
 }
 \references{
-\cite{Rou Zhong, Shishi Liu, Jingxiao Zhang, Haocheng Li (2021). "Robust Functional Principal Component Analysis for Non-Gaussian Longitudinal Data." <arXiv: http://arxiv.org/abs/2102.00911>.}
+\cite{Rou Zhong, Shishi Liu, Haocheng Li, Jingxiao Zhang (2021). "Robust Functional Principal Component Analysis for Non-Gaussian Longitudinal Data." Journal of Multivariate Analysis, https://doi.org/10.1016/j.jmva.2021.104864.}
 }

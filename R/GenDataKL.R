@@ -4,7 +4,8 @@
 #'
 #' @param n number of sample size.
 #' @param interval A \code{vector} of length two denoting the supporting interval.
-#' @param sparse A \code{vector} denoting the possible numbers of observation size. The elements are chosen with equal chance.
+#' @param sparse A \code{vector} denoting the possible numbers of observation size. The elements are chosen with equal chance. The length of \code{sparse} must be one if \code{regular = TRUE}.
+#' @param regular Logical; If \code{TRUE}, the observation grids are equally-spaced.
 #' @param meanfun A function for the mean.
 #' @param score A \emph{n} by \code{nK} \code{matrix} containing the estimates of the FPC scores, where \code{nK} is the number of FPCs.
 #' @param eigfun A \code{list} containing the eigenfunctions.
@@ -24,19 +25,25 @@
 #' eigfun[[1]] <- function(x){cos(pi * x/10)/sqrt(5)}
 #' eigfun[[2]] <- function(x){sin(pi * x/10)/sqrt(5)}
 #' score <- cbind(rnorm(n, 0, sqrt(lambda_1)), rnorm(n, 0, sqrt(lambda_2)))
-#' DataNew <- GenDataKL(n, interval = interval, sparse = 6:8,
+#' DataNew <- GenDataKL(n, interval = interval, sparse = 6:8, regular = FALSE,
 #'                      meanfun = function(x){0}, score = score,
 #'                      eigfun = eigfun, sd = sqrt(0.1))
-GenDataKL <- function(n, interval, sparse, meanfun, score, eigfun, sd){
+GenDataKL <- function(n, interval, sparse, regular, meanfun, score, eigfun, sd){
 
   # nK: the number of FPCs
   nK <- ncol(score)
+  gridequal <- seq(interval[1], interval[2], length.out = sparse[1])
 
   Lt <- list()
   Ly <- list()
   for(i in 1:n){
-    num <- sample(sparse, 1) #observation size for the i-th subject
-    Lt[[i]] <- sort(unique(stats::runif(num, min = interval[1], max = interval[2])))
+    if(regular){
+      Lt[[i]] <- gridequal
+    }else{
+      num <- sample(sparse, 1) #observation size for the i-th subject
+      Lt[[i]] <- sort(unique(stats::runif(num, min = interval[1], max = interval[2])))
+    }
+
     scorei <- score[i,]
     y <- meanfun(Lt[[i]])
     for(j in 1:nK){

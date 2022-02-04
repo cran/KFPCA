@@ -26,7 +26,7 @@
 #' eigfun[[1]] <- function(x){cos(pi * x/10)/sqrt(5)}
 #' eigfun[[2]] <- function(x){sin(pi * x/10)/sqrt(5)}
 #' score <- cbind(rnorm(n, 0, sqrt(lambda_1)), rnorm(n, 0, sqrt(lambda_2)))
-#' DataNew <- GenDataKL(n, interval = interval, sparse = 6:8,
+#' DataNew <- GenDataKL(n, interval = interval, sparse = 6:8, regular = FALSE,
 #'                      meanfun = function(x){0}, score = score,
 #'                      eigfun = eigfun, sd = sqrt(0.1))
 #' basis <- fda::create.bspline.basis(interval, nbasis = 13, norder = 4,
@@ -37,7 +37,7 @@
 #' n_test <- 20
 #' score_test <- cbind(rnorm(n_test, 0, sqrt(lambda_1)),
 #'                     rnorm(n_test, 0, sqrt(lambda_2)))
-#' Data_test <- GenDataKL(n_test, interval = interval, sparse = 6:8,
+#' Data_test <- GenDataKL(n_test, interval = interval, sparse = 6:8, regular = FALSE,
 #'                        meanfun = function(x){0}, score = score_test,
 #'                        eigfun = eigfun, sd = sqrt(0.1))
 #' # Prediction
